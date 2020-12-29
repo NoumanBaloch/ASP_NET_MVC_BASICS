@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVCBasics.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,20 @@ namespace MVCBasics.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult ViewCustomer(Customer postedCustomer)
+        {
+            Customer customer = new Customer();
+            customer.Id = Guid.NewGuid().ToString();
+            customer.Name = postedCustomer.Name;
+            customer.PhoneNumber = postedCustomer.PhoneNumber;
+            return View(customer);
+        }
+
+        public ActionResult AddCustomer()
+        {
             return View();
         }
     }
