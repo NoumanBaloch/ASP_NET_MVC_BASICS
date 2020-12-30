@@ -42,5 +42,17 @@ namespace MVCBasics.Controllers
         {
             return View();
         }
+
+        public ActionResult CustomerList()
+        {
+            List<Customer> customers = new List<Customer>();
+
+            customers.Add(new Customer() { Name = "Nouman", PhoneNumber = "123" });
+            customers.Add(new Customer() { Name = "Kashif", PhoneNumber = "456" });
+
+            return View(customers);
+
+        }
+
     }
 }
