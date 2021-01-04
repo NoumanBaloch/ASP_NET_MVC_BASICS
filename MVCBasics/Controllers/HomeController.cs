@@ -46,13 +46,18 @@ namespace MVCBasics.Controllers
             return View();
         }
 
-        public ActionResult ViewCustomer(Customer postedCustomer)
+        public ActionResult ViewCustomer(string id)
         {
-            Customer customer = new Customer();
-            customer.Id = Guid.NewGuid().ToString();
-            customer.Name = postedCustomer.Name;
-            customer.PhoneNumber = postedCustomer.PhoneNumber;
-            return View(customer);
+            Customer customer = customers.FirstOrDefault(c => c.Id == id);
+           
+            if(customer == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(customer);
+            }
         }
         
         public ActionResult AddCustomer()
@@ -72,6 +77,36 @@ namespace MVCBasics.Controllers
         {
             return View(customers);
 
+        }
+
+        public ActionResult EditCustomer(string id)
+        {
+            Customer customer = customers.FirstOrDefault(c => c.Id == id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(customer);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditCustomer(Customer customer, string id)
+        {
+            Customer customerToEdit = customers.FirstOrDefault(c => c.Id == id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                customerToEdit.Name = customer.Name;
+                customerToEdit.PhoneNumber = customer.PhoneNumber;
+                SaveCache();
+                return RedirectToAction("CustomerList");
+            }
         }
 
     }
