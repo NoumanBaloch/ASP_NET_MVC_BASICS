@@ -68,6 +68,12 @@ namespace MVCBasics.Controllers
         [HttpPost]
         public ActionResult AddCustomer(Customer customer)
         {
+            if(ModelState.IsValid is false) //Very easy to readable
+            //if(ModelState.IsValid == false) //Easy to readable
+            //if(!ModelState.IsValid)  //Difficult readable
+            {
+                return View(customer);
+            }
             customer.Id = Guid.NewGuid().ToString();
             customers.Add(customer);
             SaveCache();
